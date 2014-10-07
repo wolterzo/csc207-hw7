@@ -11,6 +11,7 @@ import edu.grinnell.glimmer.ushahidi.UshahidiWebClient;
 import edu.grinnell.glimmer.ushahidi.UshahidiCategory;
 
 import java.time.LocalDateTime;
+import java.util.Vector;
 
 public class PrintIncidentExperiment
 {
@@ -44,8 +45,10 @@ public class PrintIncidentExperiment
         new UshahidiWebClient("http://ushahidi1.grinnell.edu/sandbox/");
     // UshahidiExtensions.printIncident(pen, webclient.nextIncident());
 
+    Vector<UshahidiIncident> incidents = 
+        UshahidiExtensions.UshahidiDateRangeFilter(webclient, LocalDateTime.of(2014, 9, 1, 0, 0), LocalDateTime.of(2014, 10, 1, 0, 0));
     //UshahidiRangeofDates
-    /* UshahidiExtensions.UshahidiRangeOfDates(UshahidiExtensions.testingClient(),
+     UshahidiExtensions.UshahidiRangeOfDates(UshahidiExtensions.testingClient(),
                                              LocalDateTime.of(2012, 1, 1, 0, 0),
                                              LocalDateTime.of(2012, 1, 1, 1, 0));
 
@@ -54,17 +57,23 @@ public class PrintIncidentExperiment
      UshahidiExtensions.UshahidiRangeOfDates(webclient,
                                              LocalDateTime.of(2014, 9, 1, 0, 0),
                                              LocalDateTime.of(2014, 10, 1, 0, 0));
-                                             */
-    pen.println(UshahidiExtensions.UshahidiVectorofDateRange(UshahidiExtensions.testingClient(),
-                                                             LocalDateTime.of(2014,
-                                                                              9,
-                                                                              1,
-                                                                              0,
-                                                                              0),
-                                                             LocalDateTime.of(2014,
-                                                                              10,
-                                                                              1,
-                                                                              0,
-                                                                              0)));
+                                             
+    /*
+    UshahidiExtensions.printVectorOfIncidents(pen,
+                                              (UshahidiExtensions.UshahidiDateRangeFilter(webclient,
+                                                                                          LocalDateTime.of(2014,
+                                                                                                           9,
+                                                                                                           1,
+                                                                                                           0,
+                                                                                                           0),
+                                                                                          LocalDateTime.of(2014,
+                                                                                                           10,
+                                                                                                           1,
+                                                                                                           0,
+                                                                                                           0))));
+  */
+    UshahidiExtensions.printVectorOfIncidents(pen, UshahidiExtensions.UshahidiClientFilter(webclient, (UshahidiIncident inc) -> 
+      { return inc.getTitle().equals("ZE FRENCH NSA"); }
+    ));
   } // main(String[])
 }

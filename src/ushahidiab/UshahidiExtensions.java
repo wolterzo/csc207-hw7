@@ -195,7 +195,15 @@ public class UshahidiExtensions
       } // for
     return result;
   } // UshahidiFilter(Vector, Predicate)
-
+  
+/**
+ * Creates a vector of the incidents that meet a given criteria given by a
+ *  predicate.
+ * @param client
+ * @param pred
+ * @return
+ * @throws Exception
+ */
   public static
     Vector<UshahidiIncident>
     UshahidiClientFilter(UshahidiClient client, Predicate<UshahidiIncident> pred)

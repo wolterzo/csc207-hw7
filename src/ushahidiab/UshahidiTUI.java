@@ -11,6 +11,13 @@ import java.util.function.Predicate;
 import edu.grinnell.glimmer.ushahidi.UshahidiIncident;
 import edu.grinnell.glimmer.ushahidi.UshahidiWebClient;
 
+/**
+ * A TUI that implements three criteria for filtering, name, date and 
+ * location and returns a vector of the incidents that meet that criteria.
+ * @param PrintWriter pen
+ * @param BufferedReader eyes
+ * @param String prompt
+ */
 public class UshahidiTUI
 {
   public static String readInput(PrintWriter pen, BufferedReader eyes,
@@ -34,9 +41,8 @@ public class UshahidiTUI
   public static void runUshahidiTUI(PrintWriter pen, BufferedReader eyes)
     throws Exception
   {
-    UshahidiWebClient webClient =
-        new UshahidiWebClient(readInput(pen, eyes,
-                                        "Please enter URL of Ushahidi client:"));
+    String webClientName =
+        readInput(pen, eyes, "Please enter URL of Ushahidi client:");
     boolean quit = true;
     pen.println("OPTIONS");
     pen.println("Filter incidents in the following ways:");
@@ -48,6 +54,7 @@ public class UshahidiTUI
 
     while (quit)
       {
+        UshahidiWebClient webClient = new UshahidiWebClient(webClientName);
         switch (option)
           {
             case "date":
@@ -92,10 +99,13 @@ public class UshahidiTUI
                     };
               break;
             case "name":
-              String name = readInput(pen, eyes, "Enter a name or part of a name:").toLowerCase();
-              pred = (inc) -> {
-                return inc.getTitle().toLowerCase().contains(name);
-              };
+              String name =
+                  readInput(
+                            pen, eyes, "Enter a name or part of a name:").toLowerCase();
+              pred = (inc) ->
+                {
+                  return inc.getTitle().toLowerCase().contains(name);
+                };
               break;
             case "exit":
               quit = false;
@@ -103,21 +113,24 @@ public class UshahidiTUI
             default:
               pen.println("Invalid option.");
           } // switch
-        
-        Vector<UshahidiIncident> incidents = UshahidiExtensions.UshahidiClientFilter(webClient, pred);
-        UshahidiExtensions.printVectorOfIncidents(pen, incidents);
-        option = readInput(pen, eyes, "Type one of the above options:");
+        if (quit)
+          {
+            Vector<UshahidiIncident> incidents =
+                UshahidiExtensions.UshahidiClientFilter(webClient, pred);
+            UshahidiExtensions.printVectorOfIncidents(pen, incidents);
+            option = readInput(pen, eyes, "Type one of the above options:");
+          }
       } // while
     pen.close();
     eyes.close();
   } // runUshahidiTUI()
-  
+
   public static void main(String[] args)
     throws Exception
   {
     PrintWriter pen = new PrintWriter(System.out, true);
     BufferedReader eyes = new BufferedReader(new InputStreamReader(System.in));
-    
+
     runUshahidiTUI(pen, eyes);
   } // main
 } // UshahidiTUI

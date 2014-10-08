@@ -23,7 +23,7 @@ public class PrintIncidentExperiment
     PrintWriter pen = new PrintWriter(System.out, true);
     UshahidiLocation location = new UshahidiLocation(3, "what", 45.0, 34.0);
     UshahidiCategory category = new UshahidiCategory(2, "crazy");
-    String description = new String("holy shit look at that");
+    String description = new String("holy cow look at that");
     // A few basic incidents
     // UshahidiExtensions.printIncident(pen, UshahidiUtils.SAMPLE_INCIDENT);
     /*   UshahidiExtensions.printIncident(pen, UshahidiUtils.randomIncident());
@@ -32,7 +32,7 @@ public class PrintIncidentExperiment
        UshahidiExtensions.printIncident(pen, UshahidiUtils.randomIncident()); */
 
     // A newly created incident
-    //     UshahidiIncident myIncident = new UshahidiIncident(1,description, LocalDateTime.now(), location, "dude did you see that shit over there?", category);
+    //     UshahidiIncident myIncident = new UshahidiIncident(1,description, LocalDateTime.now(), location, "dude did you see that over there?", category);
     UshahidiIncident myIncident = new UshahidiIncident();
     //UshahidiExtensions.printIncident(pen, myIncident);
 
@@ -44,9 +44,8 @@ public class PrintIncidentExperiment
     UshahidiClient webclient =
         new UshahidiWebClient("http://ushahidi1.grinnell.edu/sandbox/");
     // UshahidiExtensions.printIncident(pen, webclient.nextIncident());
-
-    Vector<UshahidiIncident> incidents = 
-        UshahidiExtensions.UshahidiDateRangeFilter(webclient, LocalDateTime.of(2014, 9, 1, 0, 0), LocalDateTime.of(2014, 10, 1, 0, 0));
+ /*   Vector<UshahidiIncident> incidents = 
+        UshahidiExtensions.UshahidiDateRangeFilter(webclient, LocalDateTime.of(2014, 9, 1, 0, 0), LocalDateTime.of(2014, 10, 1, 0, 0));*/
     //UshahidiRangeofDates
      UshahidiExtensions.UshahidiRangeOfDates(UshahidiExtensions.testingClient(),
                                              LocalDateTime.of(2012, 1, 1, 0, 0),
@@ -54,10 +53,10 @@ public class PrintIncidentExperiment
 
      pen.println("---------------------webclient-------------");
 
-     UshahidiExtensions.UshahidiRangeOfDates(webclient,
+    UshahidiExtensions.UshahidiRangeOfDates(webclient,
                                              LocalDateTime.of(2014, 9, 1, 0, 0),
                                              LocalDateTime.of(2014, 10, 1, 0, 0));
-                                             
+                                            
     /*
     UshahidiExtensions.printVectorOfIncidents(pen,
                                               (UshahidiExtensions.UshahidiDateRangeFilter(webclient,
